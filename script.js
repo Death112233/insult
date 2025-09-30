@@ -5,8 +5,11 @@ async function getInsult() {
   const proxyUrl = "https://api.allorigins.win/get?url=";
   const apiUrl = "https://evilinsult.com/generate_insult.php?lang=en&type=json";
 
+  // Random query parameter to bypass cache
+  const urlWithRandom = proxyUrl + encodeURIComponent(apiUrl) + "&_=" + new Date().getTime();
+
   try {
-    const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+    const response = await fetch(urlWithRandom);
     const dataWrapped = await response.json();
     const data = JSON.parse(dataWrapped.contents);
     insultBox.innerText = data.insult;
